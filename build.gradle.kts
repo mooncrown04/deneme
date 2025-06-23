@@ -43,7 +43,7 @@ subprojects {
     }
 
     android {
-        namespace = "recloudstream"
+        namespace = "mooncrown04"
 
         defaultConfig {
             minSdk = 21
