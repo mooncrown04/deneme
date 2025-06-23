@@ -43,7 +43,7 @@ subprojects {
     }
 
     android {
-        namespace = "mooncrown04"
+        namespace = "com.mooncrown04"
 
         defaultConfig {
             minSdk = 21
