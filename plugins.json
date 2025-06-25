@@ -14,9 +14,9 @@
         ],
         "version": 2,
         "internalName": "TwitchProvider",
-        "jarUrl": "https://raw.githubusercontent.com/mooncrown04/deneme//builds/TwitchProvider.jar",
+        "jarUrl": "https://raw.githubusercontent.com/mooncrown04/deneme/builds/TwitchProvider.jar",
         "description": "Watch livestreams from Twitch",
-        "url": "https://raw.githubusercontent.com/mooncrown04/deneme//builds/TwitchProvider.cs3",
+        "url": "https://raw.githubusercontent.com/mooncrown04/deneme/builds/TwitchProvider.cs3",
         "name": "TwitchProvider"
     }
 ]
