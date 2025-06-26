@@ -29,45 +29,49 @@ jobs:
     - name: Gradle Yetkilendirme (Executable) Ver
       run: chmod +x gradlew
 
-    - name: Eklentiyi Derle (Release Modu)
+    - name: Eklentiyi Derle (CS3 Dosyası Oluştur) # Adım adı güncellendi
       run: |
-        ./gradlew assembleRelease
+        ./gradlew :TwitchProvider:make # TwitchProvider modülü için make görevini çalıştır
+      # Eğer modülünüzün adı "Temel" ise: ./gradlew :Temel:make
 
-    - name: Build Çıktılarını Listele # Artık TwitchProvider/ dizini altındaki 'build' dizinini kontrol ediyor
+    - name: Build Çıktılarını Listele # Çıktı klasörünü kesin olarak bulmak için bu adımı tutalım
       run: |
         echo "Listing contents of TwitchProvider/build/outputs/ directory:"
-        ls -R TwitchProvider/build/outputs/ || true # TwitchProvider/ altındaki build/outputs/ klasörünü listele
+        ls -R TwitchProvider/build/outputs/ || true
         echo "Listing contents of TwitchProvider/build/libs/ directory:"
-        ls -R TwitchProvider/build/libs/ || true    # TwitchProvider/ altındaki build/libs/ klasörünü listele
+        ls -R TwitchProvider/build/libs/ || true
         echo "Searching for .cs and .cs3 files under TwitchProvider/build/:"
-        find TwitchProvider/build/ -name "*.cs" || true # TwitchProvider/ altındaki build/ altında .cs dosyalarını ara
-        find TwitchProvider/build/ -name "*.cs3" || true # TwitchProvider/ altındaki build/ altında .cs3 dosyalarını ara
+        find TwitchProvider/build/ -name "*.cs" || true
+        find TwitchProvider/build/ -name "*.cs3" || true
         echo "Searching for .jar and .aar files under TwitchProvider/build/:"
-        find TwitchProvider/build/ -name "*.jar" || true # TwitchProvider/ altındaki build/ altında .jar dosyalarını ara
-        find TwitchProvider/build/ -name "*.aar" || true # TwitchProvider/ altındaki build/ altında .aar dosyalarını ara
+        find TwitchProvider/build/ -name "*.jar" || true
+        find TwitchProvider/build/ -name "*.aar" || true
       shell: bash
 
-    - name: Derlenen Dosyayı Yükle (Artifact Olarak)
+    - name: Cloudstream Eklentisi Yükle (CS3) # Artifact adı güncellendi
       uses: actions/upload-artifact@v4
       with:
-        name: Cloudstream-Eklentisi
-        path: TwitchProvider/build/outputs/aar/*.aar # Yeni ve düzeltilmiş yol
+        name: Cloudstream-Eklentisi-CS3 # Artifact adı .cs3'ü yansıtacak şekilde değiştirildi
+        path: TwitchProvider/build/outputs/cs3/*.cs3 # .cs3 dosyasını aramak için yol güncellendi
         retention-days: 7
         if-no-files-found: error
         compression-level: 6
         overwrite: false
         include-hidden-files: false
-      env: # env bloğu 'uses' ve 'with' ile aynı hizada (6 boşluk) olmalıdır
+      env:
         JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
         JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
 
-    - name: Cloudstream-Jar Yükle
-      uses: actions/upload-artifact@v4
-      with:
-        name: Cloudstream-Jar
-        path: TwitchProvider/build/libs/TwitchProvider-release.jar # Düzeltilen yol
-        retention-days: 7
-        if-no-files-found: warn
-        compression-level: 6
-        overwrite: false
-        include-hidden-files: false
+    # TwitchProvider modülü bir .jar dosyası oluşturmadığı için bu adımı kaldırıyorum.
+    # Eğer projenizin yapısında hala bir JAR dosyasına ihtiyacınız varsa
+    # ve nerede oluştuğunu biliyorsanız, bu adımı yeniden ekleyebilirsiniz.
+    #- name: Cloudstream-Jar Yükle
+    #  uses: actions/upload-artifact@v4
+    #  with:
+    #    name: Cloudstream-Jar
+    #    path: TwitchProvider/build/libs/TwitchProvider-release.jar
+    #    retention-days: 7
+    #    if-no-files-found: warn
+    #    compression-level: 6
+    #    overwrite: false
+    #    include-hidden-files: false
