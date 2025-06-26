@@ -33,38 +33,39 @@ jobs:
       run: |
         ./gradlew assembleRelease
 
-    - name: Build Çıktılarını Listele # Artık deponun kökündeki 'build' dizinini kontrol ediyor
+    - name: Build Çıktılarını Listele
       run: |
         echo "Listing contents of the repository root's build/outputs/ directory:"
-        ls -R build/outputs/ || true # Kök dizindeki build/outputs/ klasörünü listele
+        ls -R build/outputs/ || true
         echo "Listing contents of the repository root's build/libs/ directory:"
-        ls -R build/libs/ || true    # Kök dizindeki build/libs/ klasörünü listele
+        ls -R build/libs/ || true
         echo "Searching for .cs and .cs3 files under repository root's build/:"
-        find build/ -name "*.cs" || true # Kök dizindeki build/ altında .cs dosyalarını ara
-        find build/ -name "*.cs3" || true # Kök dizindeki build/ altında .cs3 dosyalarını ara
+        find build/ -name "*.cs" || true
+        find build/ -name "*.cs3" || true
         echo "Searching for .jar and .aar files under repository root's build/:"
-        find build/ -name "*.jar" || true # Kök dizindeki build/ altında .jar dosyalarını ara
-        find build/ -name "*.aar" || true # Kök dizindeki build/ altında .aar dosyalarını ara
+        find build/ -name "*.jar" || true
+        find build/ -name "*.aar" || true
       shell: bash
 
     - name: Derlenen Dosyayı Yükle (Artifact Olarak)
- - uses: actions/upload-artifact@v4
-  with:
-    name: Cloudstream-Eklentisi
-    path: TwitchProvider/build/outputs/aar/*.aar # Yeni ve düzeltilmiş yol
-    retention-days: 7
-    if-no-files-found: error
-    compression-level: 6
-    overwrite: false
-    include-hidden-files: false
-  env:
-    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
-    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
-    - name: Cloudstream-Jar Yükle
+      uses: actions/upload-artifact@v4
+      with:
+        name: Cloudstream-Eklentisi
+        path: TwitchProvider/build/outputs/aar/*.aar # Yeni ve düzeltilmiş yol
+        retention-days: 7
+        if-no-files-found: error
+        compression-level: 6
+        overwrite: false
+        include-hidden-files: false
+      env: # env bloğu 'uses' ve 'with' ile aynı hizada (6 boşluk) olmalıdır
+        JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
+        JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
+
+    - name: Cloudstream-Jar Yükle # Bu adımın başında 4 boşluk olmalı
       uses: actions/upload-artifact@v4
       with:
         name: Cloudstream-Jar
-        path: build/libs/TwitchProvider-release.jar # Yol, deponun kök dizinine göre ayarlandı
+        path: build/libs/TwitchProvider-release.jar
         retention-days: 7
         if-no-files-found: warn
         compression-level: 6
