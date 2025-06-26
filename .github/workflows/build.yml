@@ -61,11 +61,11 @@ jobs:
         JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
         JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
 
-    - name: Cloudstream-Jar Yükle # Bu adımın başında 4 boşluk olmalı
+    - name: Cloudstream-Jar Yükle
       uses: actions/upload-artifact@v4
       with:
         name: Cloudstream-Jar
-        path: build/libs/TwitchProvider-release.jar
+        path: TwitchProvider/build/libs/TwitchProvider-release.jar # Düzeltilen yol
         retention-days: 7
         if-no-files-found: warn
         compression-level: 6
