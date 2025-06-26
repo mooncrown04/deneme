@@ -48,11 +48,11 @@ jobs:
         find TwitchProvider/build/ -name "*.aar" || true
       shell: bash
 
-    - name: Cloudstream Eklentisi Yükle (CS3) # Artifact adı güncellendi
+    - name: Cloudstream Eklentisi Yükle (CS3)
       uses: actions/upload-artifact@v4
       with:
-        name: Cloudstream-Eklentisi-CS3 # Artifact adı .cs3'ü yansıtacak şekilde değiştirildi
-        path: TwitchProvider/build/outputs/cs3/*.cs3 # .cs3 dosyasını aramak için yol güncellendi
+        name: Cloudstream-Eklentisi-CS3
+        path: TwitchProvider/build/*.cs3 # Yolu buraya değiştirdik!
         retention-days: 7
         if-no-files-found: error
         compression-level: 6
