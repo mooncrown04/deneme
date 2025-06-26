@@ -38,9 +38,6 @@ jobs:
       uses: actions/upload-artifact@v4 # Derlenen çıktıyı GitHub Actions "Artifacts" bölümüne yükler
       with:
         name: Cloudstream-Eklentisi # Artifact'in adı
-        path: app/build/outputs/apk/release/*.apk # Derlenen .apk dosyasının yolu.
-                                               # Eğer eklenti .cs uzantılıysa,
-                                               # path: app/build/outputs/cs/*.cs
-                                               # gibi bir yolu dene.
-                                               # Bu yol, projenin yapısına göre değişebilir!
+        path: app/build/outputs/cs/*.cs # Derlenen .cs (CloudStream Bundle) dosyasının yolu.
+                                        # Bu yol, projenin yapısına göre değişebilir!
         retention-days: 7 # Bu artifact'ın GitHub'da ne kadar süre saklanacağını belirler (7 gün)
