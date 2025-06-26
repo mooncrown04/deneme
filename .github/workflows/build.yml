@@ -48,16 +48,18 @@ jobs:
       shell: bash
 
     - name: Derlenen Dosyayı Yükle (Artifact Olarak)
-      uses: actions/upload-artifact@v4
-      with:
-        name: Cloudstream-Eklentisi
-        path: build/outputs/cs/*.cs* # Yol, deponun kök dizinine göre ayarlandı
-        retention-days: 7
-        if-no-files-found: error
-        compression-level: 6
-        overwrite: false
-        include-hidden-files: false
-
+ - uses: actions/upload-artifact@v4
+  with:
+    name: Cloudstream-Eklentisi
+    path: TwitchProvider/build/outputs/aar/*.aar # Yeni ve düzeltilmiş yol
+    retention-days: 7
+    if-no-files-found: error
+    compression-level: 6
+    overwrite: false
+    include-hidden-files: false
+  env:
+    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
+    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.15-6/x64
     - name: Cloudstream-Jar Yükle
       uses: actions/upload-artifact@v4
       with:
