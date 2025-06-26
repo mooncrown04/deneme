@@ -33,25 +33,25 @@ jobs:
       run: |
         ./gradlew assembleRelease
 
-    - name: Build Çıktılarını Listele # Yeni eklenen bu adım, çıktı dosyasını bulmamıza yardımcı olacak
+    - name: Build Çıktılarını Listele # Artık deponun kökündeki 'build' dizinini kontrol ediyor
       run: |
-        echo "Listing contents of deneme/TwitchProvider/build/outputs/"
-        ls -R deneme/TwitchProvider/build/outputs/ || true
-        echo "Listing contents of deneme/TwitchProvider/build/libs/"
-        ls -R deneme/TwitchProvider/build/libs/ || true
-        echo "Searching for .cs and .cs3 files under deneme/TwitchProvider/build/"
-        find deneme/TwitchProvider/build/ -name "*.cs" || true
-        find deneme/TwitchProvider/build/ -name "*.cs3" || true
-        echo "Searching for .jar and .aar files under deneme/TwitchProvider/build/"
-        find deneme/TwitchProvider/build/ -name "*.jar" || true
-        find deneme/TwitchProvider/build/ -name "*.aar" || true
-      shell: bash # Komutları doğru çalıştırmak için shell belirtildi
+        echo "Listing contents of the repository root's build/outputs/ directory:"
+        ls -R build/outputs/ || true # Kök dizindeki build/outputs/ klasörünü listele
+        echo "Listing contents of the repository root's build/libs/ directory:"
+        ls -R build/libs/ || true    # Kök dizindeki build/libs/ klasörünü listele
+        echo "Searching for .cs and .cs3 files under repository root's build/:"
+        find build/ -name "*.cs" || true # Kök dizindeki build/ altında .cs dosyalarını ara
+        find build/ -name "*.cs3" || true # Kök dizindeki build/ altında .cs3 dosyalarını ara
+        echo "Searching for .jar and .aar files under repository root's build/:"
+        find build/ -name "*.jar" || true # Kök dizindeki build/ altında .jar dosyalarını ara
+        find build/ -name "*.aar" || true # Kök dizindeki build/ altında .aar dosyalarını ara
+      shell: bash
 
     - name: Derlenen Dosyayı Yükle (Artifact Olarak)
       uses: actions/upload-artifact@v4
       with:
         name: Cloudstream-Eklentisi
-        path: deneme/TwitchProvider/build/outputs/cs/*.cs* # Şimdilik bu yol kalsın, listeleme sonrası güncelleriz
+        path: build/outputs/cs/*.cs* # Yol, deponun kök dizinine göre ayarlandı
         retention-days: 7
         if-no-files-found: error
         compression-level: 6
@@ -62,7 +62,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Cloudstream-Jar
-        path: deneme/TwitchProvider/build/libs/TwitchProvider-release.jar
+        path: build/libs/TwitchProvider-release.jar # Yol, deponun kök dizinine göre ayarlandı
         retention-days: 7
         if-no-files-found: warn
         compression-level: 6
