@@ -3,54 +3,52 @@ name: Cloudstream Eklenti Derlemesi
 on:
   push:
     branches:
-      - main # main dalına yapılan her push'ta tetikle
-      - master # Eğer projen ana dal olarak master kullanıyorsa
+      - main
+      - master
   pull_request:
     branches:
-      - main # main dalına gelen her pull request'te tetikle
-      - master # Eğer projen ana dal olarak master kullanıyorsa
-  workflow_dispatch: # Bu, GitHub web arayüzünden manuel olarak çalıştırmana olanak tanır
+      - main
+      - master
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Derleme için en son Ubuntu sürümünü kullan
+    runs-on: ubuntu-latest
 
     steps:
     - name: Depoyu Klonla
-      uses: actions/checkout@v4 # Proje kodunu GitHub sanal makinesine çeker
+      uses: actions/checkout@v4
 
     - name: JDK 17'yi Kur
       uses: actions/setup-java@v4
       with:
-        java-version: '17' # Eklenti genellikle Java 17 veya daha yenisini gerektirir
-        distribution: 'temurin' # Eclipse Adoptium Temurin dağıtımını kullan
-        cache: 'gradle' # Gradle bağımlılıklarını önbelleğe al, sonraki derlemeleri hızlandırır
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
 
     - name: Gradle Yetkilendirme (Executable) Ver
-      run: chmod +x gradlew # `gradlew` scriptini çalıştırılabilir hale getirir (Linux/macOS için)
+      run: chmod +x gradlew
 
-    - name: Eklentiyi Derle (Release Modu) # Bu adımın adı, altındaki run komutu ile hizalı
+    - name: Eklentiyi Derle (Release Modu)
       run: |
-        ./gradlew assembleRelease # Gradle ile projenin "release" sürümünü derler.
+        ./gradlew assembleRelease
 
     - name: Derlenen Dosyayı Yükle (Artifact Olarak)
-      uses: actions/upload-artifact@v4 # Derlenen çıktıyı GitHub Actions "Artifacts" bölümüne yükler
+      uses: actions/upload-artifact@v4
       with:
-        name: Cloudstream-Eklentisi # Artifact'in adı
-        # Buradaki yolu projenizin yapısına göre düzeltiyoruz
-        path: deneme/TwitchProvider/build/outputs/cloudstream/*.cs* # *.cs ve *.cs3 uzantılarını yakalaması için güncellendi
+        name: Cloudstream-Eklentisi
+        path: deneme/TwitchProvider/build/outputs/cloudstream/*.cs*
         retention-days: 7
-        if-no-files-found: error # Dosya bulunamazsa iş akışının başarısız olması için 'error' olarak değiştirildi
+        if-no-files-found: error
         compression-level: 6
         overwrite: false
         include-hidden-files: false
 
-# İsteğe bağlı: Eğer .jar dosyasını da yüklemek isterseniz, bu adımı ekleyebilirsiniz:
 - name: Cloudstream-Jar Yükle
   uses: actions/upload-artifact@v4
   with:
     name: Cloudstream-Jar
-    path: deneme/TwitchProvider/build/libs/TwitchProvider-release.jar # Genellikle JAR dosyasının çıktığı yer
+    path: deneme/TwitchProvider/build/libs/TwitchProvider-release.jar
     retention-days: 7
     if-no-files-found: warn
     compression-level: 6
