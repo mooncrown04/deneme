@@ -29,13 +29,30 @@ jobs:
     - name: Gradle Yetkilendirme (Executable) Ver
       run: chmod +x gradlew # `gradlew` scriptini çalıştırılabilir hale getirir (Linux/macOS için)
 
-    - name: Eklentiyi Derle (Release Modu)
-      run: ./gradlew assembleRelease # Gradle ile projenin "release" sürümünü derler.
+   - name: Eklentiyi Derle (Release Modu)
+  run: |
+    chmod +x gradlew
+    ./gradlew assembleRelease
 
-    - name: Derlenen Dosyayı Yükle (Artifact Olarak)
-      uses: actions/upload-artifact@v4 # Derlenen çıktıyı GitHub Actions "Artifacts" bölümüne yükler
-      with:
-        name: Cloudstream-Eklentisi # Artifact'in adı
-        # Buradaki yolu projenizin yapısına göre düzeltiyoruz
-        path: deneme/TwitchProvider/build/outputs/cs/*.cs
-        retention-days: 7
+- name: Cloudstream-Eklentisi Yükle
+  uses: actions/upload-artifact@v4
+  with:
+    name: Cloudstream-Eklentisi
+    path: deneme/TwitchProvider/build/outputs/cloudstream/*.cs* # *.cs ve *.cs3 uzantılarını yakalaması için güncellendi
+    retention-days: 7
+    if-no-files-found: error # Dosya bulunamazsa iş akışının başarısız olması için 'error' olarak değiştirildi
+    compression-level: 6
+    overwrite: false
+    include-hidden-files: false
+
+# İsteğe bağlı: Eğer .jar dosyasını da yüklemek isterseniz, bu adımı ekleyebilirsiniz:
+- name: Cloudstream-Jar Yükle
+  uses: actions/upload-artifact@v4
+  with:
+    name: Cloudstream-Jar
+    path: deneme/TwitchProvider/build/libs/TwitchProvider-release.jar # Genellikle JAR dosyasının çıktığı yer
+    retention-days: 7
+    if-no-files-found: warn
+    compression-level: 6
+    overwrite: false
+    include-hidden-files: false
