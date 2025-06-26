@@ -31,13 +31,11 @@ jobs:
 
     - name: Eklentiyi Derle (Release Modu)
       run: ./gradlew assembleRelease # Gradle ile projenin "release" sürümünü derler.
-                                     # Eğer sadece birim testi yapmak istersen 'test' kullanabilirsin.
-                                     # Projeye göre 'assemble' veya 'build' de olabilir.
 
-     - name: Derlenen Dosyayı Yükle (Artifact Olarak)
-      uses: actions/upload-artifact@v4
+    - name: Derlenen Dosyayı Yükle (Artifact Olarak)
+      uses: actions/upload-artifact@v4 # Derlenen çıktıyı GitHub Actions "Artifacts" bölümüne yükler
       with:
         name: Cloudstream-Eklentisi # Artifact'in adı
         # Buradaki yolu projenizin yapısına göre düzeltiyoruz
-        path: deneme/TwitchProvider/build/outputs/cs/*.cs 
+        path: deneme/TwitchProvider/build/outputs/cs/*.cs
         retention-days: 7
