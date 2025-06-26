@@ -33,18 +33,32 @@ jobs:
       run: |
         ./gradlew assembleRelease
 
+    - name: Build Çıktılarını Listele # Yeni eklenen bu adım, çıktı dosyasını bulmamıza yardımcı olacak
+      run: |
+        echo "Listing contents of deneme/TwitchProvider/build/outputs/"
+        ls -R deneme/TwitchProvider/build/outputs/ || true
+        echo "Listing contents of deneme/TwitchProvider/build/libs/"
+        ls -R deneme/TwitchProvider/build/libs/ || true
+        echo "Searching for .cs and .cs3 files under deneme/TwitchProvider/build/"
+        find deneme/TwitchProvider/build/ -name "*.cs" || true
+        find deneme/TwitchProvider/build/ -name "*.cs3" || true
+        echo "Searching for .jar and .aar files under deneme/TwitchProvider/build/"
+        find deneme/TwitchProvider/build/ -name "*.jar" || true
+        find deneme/TwitchProvider/build/ -name "*.aar" || true
+      shell: bash # Komutları doğru çalıştırmak için shell belirtildi
+
     - name: Derlenen Dosyayı Yükle (Artifact Olarak)
       uses: actions/upload-artifact@v4
       with:
         name: Cloudstream-Eklentisi
-        path: deneme/TwitchProvider/build/outputs/cs/*.cs*
+        path: deneme/TwitchProvider/build/outputs/cs/*.cs* # Şimdilik bu yol kalsın, listeleme sonrası güncelleriz
         retention-days: 7
         if-no-files-found: error
         compression-level: 6
         overwrite: false
         include-hidden-files: false
 
-    - name: Cloudstream-Jar Yükle # Bu adım artık diğer 'steps' öğeleriyle aynı hizada (4 boşluk girintili)
+    - name: Cloudstream-Jar Yükle
       uses: actions/upload-artifact@v4
       with:
         name: Cloudstream-Jar
