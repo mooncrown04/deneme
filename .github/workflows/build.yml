@@ -44,13 +44,13 @@ jobs:
         overwrite: false
         include-hidden-files: false
 
-- name: Cloudstream-Jar Yükle
-  uses: actions/upload-artifact@v4
-  with:
-    name: Cloudstream-Jar
-    path: deneme/TwitchProvider/build/libs/TwitchProvider-release.jar
-    retention-days: 7
-    if-no-files-found: warn
-    compression-level: 6
-    overwrite: false
-    include-hidden-files: false
+    - name: Cloudstream-Jar Yükle # Bu adım artık diğer 'steps' öğeleriyle aynı hizada (4 boşluk girintili)
+      uses: actions/upload-artifact@v4
+      with:
+        name: Cloudstream-Jar
+        path: deneme/TwitchProvider/build/libs/TwitchProvider-release.jar
+        retention-days: 7
+        if-no-files-found: warn
+        compression-level: 6
+        overwrite: false
+        include-hidden-files: false
